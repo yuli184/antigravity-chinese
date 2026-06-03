@@ -306,7 +306,7 @@ def patch_asar(resources_dir):
     temp_dir = tempfile.mkdtemp()
     print("正在解压 app.asar 包...")
     import asarPy
-    asarPy.extractAsar(asar_file, temp_dir)
+    asarPy.extract_asar(asar_file, temp_dir)
 
     # 3. 注入 preload.js 和 wizardPreload.js
     preload_paths = [
@@ -343,7 +343,7 @@ def patch_asar(resources_dir):
 
     # 5. 重打包成 app.asar
     print("正在打包汉化包并覆盖原有程序...")
-    asarPy.packAsar(temp_dir, asar_file)
+    asarPy.pack_asar(temp_dir, asar_file)
     
     # 清理临时目录
     shutil.rmtree(temp_dir)
