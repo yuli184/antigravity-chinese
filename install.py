@@ -303,7 +303,12 @@ def patch_asar(resources_dir):
         print("已检测到原版备份。")
 
     # 2. 解包到临时文件夹
-    temp_dir = tempfile.mkdtemp()
+    temp_dir = os.path.join(tempfile.gettempdir(), f"antigravity_patch_{int(time.time())}")
+    if os.path.exists(temp_dir):
+        try:
+            shutil.rmtree(temp_dir)
+        except Exception:
+            pass
     print("正在解压 app.asar 包...")
     import asarPy
     asarPy.extract_asar(asar_file, temp_dir)
