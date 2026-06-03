@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-"""
-Antigravity 2.0 一键汉化注入脚本 (官方增强版)
-支持 Windows, macOS, Linux
-"""
+# Antigravity 2.0 一键汉化注入脚本 (官方增强版)
+# 支持 Windows, macOS, Linux
 
 import os
 import sys
@@ -940,8 +938,7 @@ def patch_asar(resources_dir):
                 shutil.rmtree(clean_temp)
             
             # 注入新翻译引擎
-            content += "
-" + DOM_TRANSLATOR_CODE
+            content += "\n" + DOM_TRANSLATOR_CODE
             with open(path, "w", encoding="utf-8") as f:
                 f.write(content)
 
@@ -968,8 +965,7 @@ def patch_asar(resources_dir):
         target_hook = "electron_1.Menu.setApplicationMenu(menu);"
         if target_hook in content:
             content = content.replace(target_hook, "if (typeof translateMenu === 'function') { menu.items.forEach(translateMenu); } " + target_hook)
-            content += "
-" + MENU_JS_INJECTION
+            content += "\n" + MENU_JS_INJECTION
             with open(menu_path, "w", encoding="utf-8") as f:
                 f.write(content)
 
@@ -1003,7 +999,7 @@ def patch_asar(resources_dir):
                        "    contextMenu = electron_1.Menu.buildFromTemplate(translatedActions);"
         
         old_label = "countItem.label = count > 0 ? `${count} active agents` : 'No agents running';"
-        old_label_2 = "countItem.label = count > 0 ? `${count} active agents` : "No agents running";"
+        old_label_2 = "countItem.label = count > 0 ? `${count} active agents` : \"No agents running\";"
         
         new_label = "countItem.label = count > 0 ? `${count} 个智能体运行中` : '没有智能体在运行';"
 
@@ -1016,7 +1012,7 @@ def patch_asar(resources_dir):
             content = content.replace(old_label_2, new_label)
         else:
             # Try regex replacement for count label
-            content = re.sub(r'countItem\.label\s*=\s*count\s*>\s*0\s*\?\s*`\$\{count\}\s*active\s*agents`\s*:\s*['"]No\s*agents\s*running['"]\s*;', new_label, content)
+            content = re.sub(r'countItem\.label\s*=\s*count\s*>\s*0\s*\?\s*`\$\{count\}\s*active\s*agents`\s*:\s*[\'"]No\s*agents\s*running[\'"]\s*;', new_label, content)
 
         with open(tray_path, "w", encoding="utf-8") as f:
             f.write(content)
