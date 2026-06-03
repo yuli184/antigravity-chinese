@@ -928,6 +928,7 @@ def patch_asar(resources_dir):
                 print(f"检测到已存在的旧汉化版本，正在还原为干净的 {os.path.basename(path)}...")
                 # 提取备份包中相应路径下的纯净 preload.js
                 clean_temp = tempfile.mkdtemp()
+                os.rmdir(clean_temp)
                 asarPy.extract_asar(backup_file, clean_temp)
                 rel_path = os.path.relpath(path, temp_dir)
                 clean_file_path = os.path.join(clean_temp, rel_path)
@@ -952,6 +953,7 @@ def patch_asar(resources_dir):
         # 还原干净 of menu.js
         if "translateMenu" in content:
             clean_temp = tempfile.mkdtemp()
+            os.rmdir(clean_temp)
             asarPy.extract_asar(backup_file, clean_temp)
             rel_path = os.path.relpath(menu_path, temp_dir)
             clean_file_path = os.path.join(clean_temp, rel_path)
@@ -979,6 +981,7 @@ def patch_asar(resources_dir):
         # 还原干净 of tray.js
         if "translatedActions" in content:
             clean_temp = tempfile.mkdtemp()
+            os.rmdir(clean_temp)
             asarPy.extract_asar(backup_file, clean_temp)
             rel_path = os.path.relpath(tray_path, temp_dir)
             clean_file_path = os.path.join(clean_temp, rel_path)
